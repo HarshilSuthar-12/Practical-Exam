@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Enter Your Details</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+    <center>
+        <div>
+            <fieldset style="width: 300px">
+                <legend>Enter New Entry</legend>
+                <form method="post" action="result" autocomplete="off">
+                <table>
+                    <tr>
+                        <td>Enter Student ID: </td>
+                        <td><input type="text" name="sid" required></td>
+                    </tr>
+                    <tr>
+                        <td>Enter Student Name: </td>
+                        <td><input type="text" name="sname" required></td>
+                    </tr>
+                    <tr>
+                        <td>Select Your Gender: </td>
+                        <td>
+                            <input type="radio" name="sgender" id="Male" value="Male" required><label for="Male">Male</label><br>
+                            <input type="radio" name="sgender" id="Female" value="Female" required><label for="Female">Female</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Select Your Skills: </td>
+                        <td>
+                            <input type="checkbox" name="skills_1" id="Java" value="Java"><label for="Java">Java</label><br>
+                            <input type="checkbox" name="skills_2" id="Python" value="Python"><label for="Python">Python</label><br>
+                            <input type="checkbox" name="skills_3" id="Database" value="Database"><label for="Database">Database</label><br>
+                        </td>
+                    </tr>     
+                    <tr>
+                        <td colspan="2">
+                            <center>
+                                <input type="submit" value="Insert" name="submit">    
+                            </center>
+                        </td>
+                    </tr> 
+                </table>
+            </form>
+            </fieldset>
+            <fieldset style="width: 800px; margin: 30px">
+                <legend>Get Specific Existing Record</legend>
+            <form method="post" action="result" autocomplete="off">
+                <table>
+                    <tr>
+                        <td>Search By Student ID: </td>
+                        <td><input type="text" name="search_id"></td>
+                        <td><input type="submit" value="Search Result by ID" name="submit"></td>
+                    </tr>
+                    <tr>
+                        <td>Search Student Name {Exact Search Is Not Compulsory}: </td>
+                        <td><input type="text" name="search_name"></td>
+                        <td><input type="submit" value="Search Result by Names" name="submit"></td>
+                    </tr>
+                </table>
+            </form>
+            </fieldset>
+            <fieldset style="width: 800px">
+                <legend>Get Group of Records</legend>
+            <form method="post" action="result" autocomplete="off">  
+                <br>
+                By Gender: 
+                <select name="search_gender">
+                    <option disabled='' selected="" value="">Select One</option>
+                    <option value='Male'>Male</option>
+                    <option value="Female">Female</option>
+                </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Find Results By Gender" name="submit"><br><br>
+                By Skills: 
+                <select name="search_skill">
+                    <option disabled='' selected="">Select One</option>
+                    <option>Java</option>
+                    <option>Python</option>
+                    <option>Database</option>
+                </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Find Results By Skill" name="submit"><br><br>
+            </form>
+            </fieldset>
+        </div>
+    </center>
+    </body>
+</html>
