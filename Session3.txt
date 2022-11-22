@@ -1,0 +1,116 @@
+Read / Assigning a document to a variable
+-----------------------------------------------------------------------------
+
+for (i=1;i<5;i++){
+	db.test.insert({"No":i,"Name":"N"+i});
+}
+
+db.test.find()
+{ "_id" : ObjectId("630d998d59d4a58f9b9f45ac"), "No" : 1, "Name" : "N1" }
+{ "_id" : ObjectId("630d998d59d4a58f9b9f45ad"), "No" : 2, "Name" : "N2" }
+{ "_id" : ObjectId("630d998d59d4a58f9b9f45ae"), "No" : 3, "Name" : "N3" }
+{ "_id" : ObjectId("630d998d59d4a58f9b9f45af"), "No" : 4, "Name" : "N4" }
+
+db.test.findOne({"No":4})
+
+t = db.test.findOne({"No":4})
+t.No++
+
+db.test.update({"Name":"N4"},t)
+
+t.Name = "Hello"
+
+db.test.update({"Name":"N4"},t)
+
+
+
+----------------
+
+------Update----
+db.coo.find()
+{ "_id" : ObjectId("63118b905dce07b21d0cdf64"), "No" : 1, "Name" : "N1" }
+{ "_id" : ObjectId("63118b905dce07b21d0cdf65"), "No" : 2, "Name" : "N2" }
+{ "_id" : ObjectId("63118b905dce07b21d0cdf66"), "No" : 3, "Name" : "N3" }
+{ "_id" : ObjectId("63118b905dce07b21d0cdf67"), "No" : 4, "Name" : "N4" }
+
+db.coo.update({"No":4},{"Name":"Anand"})
+
+
+---------------
+Using Modifiers
+---------------
+
+$set
+
+"$set" sets the value of a field. If the field does not yet exist, it will be created. This can be handy for updating schema or adding user-defined keys.
+
+
+
+db.users.insert({"name" : "Ami", "age" : 19, "gender" : "female", "location" : "Anand" }
+
+db.users.update({"name" : "Ami")}, {"$set" : {"favorite book" : "War and Peace"}})
+
+
+db.users.update({"name":"Ami"},{"$set":{"favorite book":["Cat's Cradle","Foundation Trilogy","Ender's Game"]}})
+
+-------------- for embedded documents ------------
+
+db.coo.insert({"no":1,"name":"Ami", "address":
+			{"appt":"408 ABC", "area":"Street Road","city":"Anand"}, 
+		"mobile":2312547898})
+
+db.coo.update({"no":1},{"$set": {"address.appt":"409 ABC"}})
+--------------------------------------------------
+
+--------------------
+$inc
+--------------------
+db.analysis.insert({"url":"www.nilayvaidya.com","hits":0})
+db.analysis.update({"url" : "www.nilayvaidya.com"}, {"$inc" : {"hits" : 1}})
+
+db.analysis.find()
+
+
+---------------------------X--
+db.coo.insert({"count" : "1"})
+
+db.coo.update({}, {"$inc" : {"count" : 1}})
+---------------------------X--
+
+
+
+--------------------------------------------
+Read a document from function and print:
+--------------------------------------------
+
+function f1(){
+a = db.temp.findOne({"order" : "o1"});
+print(a.order);
+print(a.cost.price);
+}
+
+-------- Passing a value and search ----------
+function f1(n1){
+a = db.temp.findOne({"order":n1});
+print(a.order);
+print(a.cost.price);
+}
+
+---------- Passing range to search documents ------
+
+function f1(n1,n2){
+for(i=n1;i<n2;i++){
+	a = db.student1.findOne({"No":i});
+	print(a.No);
+	print(a.Name);
+}
+}
+
+
+
+Creating an empty collection 
+
+ db.createCollection("emp")
+
+------------------------------------------------------
+

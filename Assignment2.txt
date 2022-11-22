@@ -1,0 +1,75 @@
+db.tran.insertMany([{ cr_dr : "D", amount : 100, fee : 2},{ cr_dr : "C", amount : 100, fee : 2},
+{ cr_dr : "C", amount : 10, fee : 2},{ cr_dr : "D", amount : 100, fee : 4},{ cr_dr : "D", amount : 10, fee : 2},
+{ cr_dr : "C", amount : 10, fee : 4},{ cr_dr : "D", amount : 100, fee : 2}]);
+
+
+(1) Find cr_dr and total amount (amount + fees) for each transactions
+	db.tran.find({},{_id:0, cr_dr:1, totalAmount : {$sum : ['$amount', '$fee']} })
+	when We are using find and we have to display some of fields from whole document we have to set those by 1.
+	
+(2) How do you get the number of Debit transactions?
+	db.tran.find({"cr_dr":"D"}).count()
+	in this we have to use count function where cr_dr = "D", D stends for debit here
+
+(3) Find number of Debit and number of Credit transactions.
+	db.tran.aggregate(
+	[
+		{$group: {_id: "$cr_dr",count: {$sum:1}}}
+	])
+	in this query we have to use aggregate function, we have to do count or summation or something ON BASIS OF GROUP We have to use aggreagate function.
+When we want to get count of groups we have to use count and $sum : 1
+
+(4) How to get the summation of amount?
+	db.tran.find({},{total_Sum: {$sum:['$amount','$fee']}, _id: 0})
+	in this we have to do just sum of amount.
+
+(5) How to get the summation of amount and fees?
+	db.tran.find({},{Summation: {$sum: {$sum: {$amount,$fee} } } })
+	Same as Above
+
+
+(6) How to get the average amount of Debit and credit transactions?
+	db.tran.aggregate([
+		{$group : {_id: "$cr_dr",
+		Average : {$avg : "$amount"}}}
+	])
+	Same grouping Query and have to find Average using avg function.
+	
+(7) How to get the total amount for Credit and Debit transactions but not to include the transaction amount less than 50?
+	
+	select cr_dr, sum(amount) from tran where amount >50 group by  cr_dr
+	db.tran.aggregate([
+		{$match: { amount : { $gt: 50}}},
+		{ $group : {_id: "$cr_dr",
+		Total : {$sum : "$amount"}}}
+	])
+	IN THIS QUERY we have to first check whether transaction amount is greater than 50 or not USING Match function
+	if yes then we have to calculate total amount using sum.
+
+(8) How to get the total amount for Credit and Debit transactions but not to include the transaction amount less than 50? Eliminate the group(s) if total amount is less than or equal to  100.
+
+	select cr_dr, sum(amount) from tran where amount > 50 
+	group by cr_dr having sum(amount) > 100
+
+	db.tran.aggregate ([
+		{"$match":{ amount : {$gt:50}}},
+		{"$group" :{"_id":"$cr_dr",
+		"Sum" : {"$sum": "$amount"}}},
+		{"$match": {"Sum" :{"$gt":100} } }
+	])
+	in this one we have to only take those transaction which have amount > 50 and it will devided group wise, if total sum of any group will be less than 100, the group will not being included for output.
+
+(9) How to get the average amount for Credit and Debit transactions? Eliminate the transactions with less than 100 Rs in amount.
+	
+	db.tran.aggregate ([
+	{"$match" : {"amount": {"$gte":100}}},
+	{"$group" :{"_id": "$cr_dr",
+	"Average" : {"$avg" : "$amount"}}}
+	])
+	same as above.
+
+
+
+We have finished with Assignment-2_____________________________________________
+
+
