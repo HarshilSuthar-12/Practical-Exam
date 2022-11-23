@@ -1,0 +1,43 @@
+﻿@using MVCCRUD.Models
+@model TBLEmployee
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Update</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("UpdateEmployee", "Employee", FormMethod.Post))
+        {
+
+            <label>Employee id</label>
+            @Html.TextBoxFor(a => a.EmployeeID)
+            <label>Name</label>
+            @Html.TextBoxFor(a => a.Name)
+            <label>City</label>
+            @Html.TextBoxFor(a => a.City)
+            <label>Birth Date</label>
+            @Html.TextBoxFor(a => a.BirthDate, new { type = "date", id="bdate" })
+            @Html.HiddenFor(a=>a.Id_PK)
+
+            <input type="submit" value="Update" />
+
+
+        }
+    </div>
+    <script>
+        var d=@Model.BirthDate.ToString("dd");
+        var m= @Model.BirthDate.ToString("MM");
+        var y = @Model.BirthDate.ToString("yyyy");
+        var v = y + '-' + (((m.toString().length) == 1) ? ('0'+m) : m) + '-' + (((d.toString().length) == 1) ? ('0'+d) : d);
+        var d = document.querySelector("#bdate");
+        d.value = v;
+    </script>
+</body>
+</html>

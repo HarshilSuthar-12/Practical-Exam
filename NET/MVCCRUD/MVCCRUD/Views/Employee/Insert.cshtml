@@ -1,0 +1,40 @@
+﻿@using MVCCRUD.abcModels
+@model emp
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Insert</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style>
+        .redtext{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <div> 
+        @using (Html.BeginForm("InsertEmployee","Employee",FormMethod.Post))
+        {
+            <label>Employee Id:</label>
+            @Html.TextBoxFor(a=>a.employeeID, new {Class="bg-primary redtext" })
+            @*<input type="text" name="eid" />*@
+            <label>Employee Name:</label>
+            @Html.TextBoxFor(a => a.name)
+            @*<input type="text" name="name" />*@
+            <label>Employee City:</label>
+            @Html.TextBoxFor(a => a.city)
+            @*<input type="text" name="city" />*@
+            <label>Employee BirthDate:</label>
+            @Html.TextBoxFor(a => a.birthDate, new { type = "date", style="background-color:violet", abc="xyz" })
+            @*<input type="date" name="bd" Class="color-red"/>*@
+            <input type="submit" />
+        }
+    </div>
+</body>
+</html>

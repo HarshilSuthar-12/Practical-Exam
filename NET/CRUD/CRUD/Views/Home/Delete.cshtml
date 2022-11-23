@@ -1,0 +1,24 @@
+﻿@model CRUD.Models.Student
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+@Html.Raw(TempData["Message"])
+<h2>Delete</h2>
+@using (Html.BeginForm("Delete", "Home", FormMethod.Post))
+{
+    <label>Enter UserName : </label>
+    @Html.TextBoxFor(model => model.name, "", new { @class = "form-control" })
+    <br />
+    <br />
+    <label>Enter age : </label>
+    @Html.TextBoxFor(model => model.age, "", new { @class = "form-control" })
+    <br />
+    <br />
+    <label>Enter gender : </label>
+    @Html.TextBoxFor(model => model.gender, "", new { @class = "form-control" })
+    <br />
+    <br />
+    <input type="submit" value="Delete" />
+}

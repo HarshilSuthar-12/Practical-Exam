@@ -1,0 +1,34 @@
+﻿@using MVCCRUD.Models
+@model TBLEmployee
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Insert</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("InsertEmployee", "Employee", FormMethod.Post))
+        {
+
+            <label>Employee id</label>
+            @Html.TextBoxFor(a => a.EmployeeID)
+            <label>Name</label>
+            @Html.TextBoxFor(a => a.Name)
+            <label>City</label>
+            @Html.TextBoxFor(a => a.City)
+            <label>Birth Date</label>
+            @Html.TextBoxFor(a => a.BirthDate, new { type="date" })
+
+            <input type="submit" value="Insert" />
+
+
+        }
+    </div>
+</body>
+</html>

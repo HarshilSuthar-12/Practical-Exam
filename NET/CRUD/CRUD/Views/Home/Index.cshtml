@@ -1,0 +1,28 @@
+﻿@model List<CRUD.Models.Student>
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Raw(TempData["Message"])
+<h2>Index</h2>
+
+<table class="table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.name</td>
+            <td>@item.age</td>
+            <td>@item.gender</td>
+        </tr>
+    }
+</table>
+
+@Html.ActionLink("Insert","Insert")
+@Html.ActionLink("Deleted", "Delete")

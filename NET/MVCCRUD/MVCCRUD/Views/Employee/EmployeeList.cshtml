@@ -1,0 +1,39 @@
+﻿@using MVCCRUD.Models
+@model List<TBLEmployee>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EmployeeList</title>
+</head>
+<body>
+    <div>
+        @*<a href="/Employee/Insert">Insert</a>*@
+        @Html.ActionLink("Go To Insert","Insert","Employee")
+        <table border="1">
+            <tr>
+                <th>id_pk</th>
+                <th>eid</th>
+                <th>name</th>
+                <th>city</th>
+                <th>bdate</th>
+            </tr>
+            @foreach(TBLEmployee e in Model)
+            {
+                <tr>
+                    <td>@e.id_PK</td>
+                    <td>@e.employeeID</td>
+                    <td>@e.name</td>
+                    <td>@e.city</td>
+                    <td>@e.birthDate</td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
