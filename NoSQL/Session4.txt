@@ -1,0 +1,119 @@
+Collection emp:
+{ "_id" : ObjectId("6311be7a7e8e964907c4b91c"), "no" : 1, "name" : "ST", "salary" : 2000, "role" : "OB" }
+{ "_id" : ObjectId("6311be7a7e8e964907c4b91d"), "no" : 2, "name" : "MSD", "salary" : 1500, "role" : "WK" }
+{ "_id" : ObjectId("6311be7a7e8e964907c4b91e"), "no" : 3, "name" : "YS", "salary" : 1000, "role" : "ALR" }
+{ "_id" : ObjectId("6311be7a7e8e964907c4b91f"), "no" : 4, "name" : "RD", "salary" : 1000, "role" : "MOB" }
+{ "_id" : ObjectId("6311be7a7e8e964907c4b920"), "no" : 5, "name" : "RS", "salary" : 500, "role" : "OB" }
+{ "_id" : ObjectId("6311be7a7e8e964907c4b921"), "no" : 6, "name" : "BK", "salary" : 500, "role" : "MOB" }
+{ "_id" : ObjectId("6311be7a7e8e964907c4b922"), "no" : 7, "name" : "VK", "salary" : 300, "role" : "BW" }
+{ "_id" : ObjectId("6311be7a7e8e964907c4b923"), "no" : 8, "name" : "JB", "salary" : 400, "role" : "BW" }
+{ "_id" : ObjectId("6311be7a7e8e964907c4b924"), "no" : 9, "name" : "HP", "salary" : 400, "role" : "ALR" }
+{ "_id" : ObjectId("6311be7a7e8e964907c4b925"), "no" : 10, "name" : "VS", "salary" : 300, "role" : "OB" }
+
+-----------------Pattern Matching --------------------
+
+db.emp.find({Name:/^R/}) -> Starts with N
+db.emp.find({Name:/D$/}) -> Ends with 1
+db.emp.find({Name:/S/}) -> At any position a
+
+
+------------------------------------------------------
+
+----------------------Interacting with cursors-------------------------
+
+var a = db.emp.find({});
+while(a.hasNext()){
+	print(tojson(a.next()));}
+
+--------------------------- Finding a column(s) from document----------
+
+db.emp.find({},{name:1})
+db.emp.find({},{name:1,no:1})
+
+----------------------------  Specific field retrieval ---------------
+
+var a = db.emp.find({},{name:1,no:1});
+while(a.hasNext()){
+	print(tojson(a.next()));}
+
+----------------------------  Specific fields retrieval ---------------
+var a = db.emp.find({},{name:1,no:1});
+while(a.hasNext()){
+	print(tojson(a.next()));}
+
+------------------  Specific fields retrieval without the _id ---------------
+var a = db.emp.find({},{name:1,no:1,_id:0});
+while(a.hasNext()){
+	print(tojson(a.next()));}
+
+
+------------------  Renaming a collection ---------------
+
+db.student1.renameCollection("student")
+
+---------------------------------------------------------
+
+
+--------------------- Count, Limit, Skip & Sort ---------------------------
+
+=> db.emp.find().count()
+=> db.emp.find({role:"BW"}).count()
+
+=> db.emp.find().limit(2)
+=> db.emp.find().limit(2).skip(2)
+
+
+=> db.emp.find().sort({name:1})
+=> db.emp.find().sort({name:-1})
+
+=> db.emp.find().sort({role:1,no:-1})
+
+
+---------------------------------------------------------
+Aggregation (Group by)
+---------------------------------------------------------
+
+---------------Count---------------
+
+(1) db.emp.aggregate([
+			{$group: {_id:'$role',count:{$sum:1}}
+			}
+		    ])
+
+---------------Sum---------------
+
+(2) db.emp.aggregate([
+			{$group: 
+				{_id:'$role',
+				count:{$sum:1},
+				totalAmount: {$sum: '$salary'}
+				}
+			}
+		    ])
+---------------Average---------------
+
+(3) db.emp.aggregate([
+			{$group: 
+				{_id:'$role',
+				count:{$sum:1},
+				totalAmount: {$sum: '$salary'},
+				avgAmt:{$avg: '$salary'}
+				}
+			}
+		    ])
+
+
+
+
+--------------------Upsert -------------------------------------
+
+In MongoDB, upsert is an option that is used for update operation e.g. update(), findAndModify(), etc. Or in other words, upsert is a combination of update and insert (update + insert = upsert). If the value of this option is set to true and the document or documents found that match the specified query, then the update operation will update the matched document or documents. Or if the value of this option is set to true and no document or documents matches the specified document, then this option inserts a new document in the collection and this new document have the fields that indicate in the operation. By default, the value of the upsert option is false. If the value of upsert in a sharded collection is true then you have to include the full shard key in the filter. 
+
+
+
+
+db.coo.findAndModify( {query:{"Name":"N1"}, update:{$set:{"No":100}},upsert:true })
+
+db.coo.findAndModify( {query:{"No":1}, update:{$set:{"No":100}} })
+
+db.coo.findAndModify( {query:{"No":1}, update:{$set:{"No":100}},upsert:true })

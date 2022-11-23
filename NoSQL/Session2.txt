@@ -1,0 +1,139 @@
+Batch insert
+
+(1) Single using variable
+post = ({"ID": 1, "name":"Ami"})
+db.student.insert(post)
+(2) Single without variable
+db.student.insert({"ID": 2, "name":"Amit"})
+
+(3) Batch / multiple
+
+db.student.insertMany (Array)
+db.student.insertMany ([{},{}])
+
+db.student.insertMany([{"ID": 3, "name":"Amita"}, {"ID": 4, "name":"Amitabh"}])
+
+--------
+items -> Collection
+bulk -> variable array
+
+var bulk = db.items.initializeUnorderedBulkOp();
+bulk.insert( { item: "abc123", defaultQty: 100, status: "A", points: 100 } );
+bulk.insert( { item: "ijk123", defaultQty: 200, status: "A", points: 200 } );
+bulk.insert( { item: "mop123", defaultQty: 0, status: "P", points: 0 } );
+bulk.execute();
+
+
+db.items.find()
+
+-----
+
+
+-----------------------------------------------------------------------------------
+Removing Documents
+-----------------------------------------------------------------------------------
+(1) db.student.remove({"name":"Amitabh"})
+
+Once removed -> forever. 
+No undo or rollback or recover.
+
+
+-----------------------------------------------------------------------------
+Bulk insert / delete using a looping construct
+-----------------------------------------------------------------------------
+
+for (var i = 1; i <10; i++){
+db.test.insert ({"No" : i,"Name" : "b"+i})
+}
+
+
+for (var i = 1; i <5; i++){
+db.test.remove ({"No" : i})
+}
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+Read / Assigning a document to a variable
+-----------------------------------------------------------------------------
+
+for (i=1;i<5;i++){
+	db.test.insert({"No":i,"Name":"N"+i});
+}
+
+db.test.find()
+{ "_id" : ObjectId("630d998d59d4a58f9b9f45ac"), "No" : 1, "Name" : "N1" }
+{ "_id" : ObjectId("630d998d59d4a58f9b9f45ad"), "No" : 2, "Name" : "N2" }
+{ "_id" : ObjectId("630d998d59d4a58f9b9f45ae"), "No" : 3, "Name" : "N3" }
+{ "_id" : ObjectId("630d998d59d4a58f9b9f45af"), "No" : 4, "Name" : "N4" }
+
+db.test.findOne({"No":4})
+
+t = db.test.findOne({"No":4})
+t.No++
+
+db.test.update({"Name":"N4"},t)
+
+t.Name = "Hello"
+
+db.test.update({"Name":"N4"},t)
+
+
+-----------------------------------------------------------------------------
+Measuring time to remove data:
+-----------------------------------------------------------------------------
+function f1(){
+var start = (new Date()).getTime();
+
+db.student1.remove({});
+db.student1.findOne();
+
+var timeDiff = (new Date()).getTime() - start;
+print("Time " + timeDiff);
+}
+
+
+-------------------------------------------------------------------------
+Using Modifiers
+-------------------------------------------------------------------------
+
+(1) $inc
+db.analysis.insert({"url":"www.nilayvaidya.com","hits":0})
+db.analysis.update({"url" : "www.nilayvaidya.com"}, {"$inc" : {"hits" : 1}})
+
+db.analysis.find()
+
+---------------------------X--
+db.coo.insert({"count" : "1"})
+
+db.coo.update({}, {"$inc" : {"count" : 1}})
+---------------------------X--
+
+(2) $gt -> Greater than
+
+db.items.find({"defaultQty":{$gt:110}})
+
+(3) $lt -> Greater than
+db.items.find({"defaultQty":{$lt:110}})
+
+(3) $ne -> not equal to
+
+(4) $and:
+
+db.test.find(
+               {$and:
+                    [
+                       {"Name" : {$ne :"N2"}},
+                       {"No" : {$gt : 1}},
+                    ]
+                }
+                    );
+
+(5) $or
+
+
+

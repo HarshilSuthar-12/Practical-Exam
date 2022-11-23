@@ -1,0 +1,217 @@
+------------
+x = 200
+x/5
+x = x / 5
+x
+------------
+------------
+x = "CMPICA"
+x
+x = x + "CHARUSAT"
+x
+------------
+
+
+JavaScript function
+
+function fact(n){
+if (n<=1) return 1;
+return n * fact(n-1);
+}
+
+fact(4)
+----------------------
+function f1(x){
+if (x>0) return "Positive";
+else if(x<0)
+return "Negative";
+else 
+return "ZERO";
+}
+
+function f1 (x){
+return x + " CHARUSAT";
+}
+f1("CMPICA")
+
+----------------------
+
+-------------------------------------
+function fact(n){
+if (n > 5)
+print ("More than 5 ");
+else
+print ("Less than 5 ");
+return 0;
+}
+
+
+-------------------------------------
+
+
+
+Default database :
+-----------------------------
+On startup, the shell connects to the database on a MongoDB server and assigns this database connection to the 
+	-> global variable db 
+db 
+
+--------------------------------
+show dbs
+show collections
+show users
+--------------------------------
+
+To change the database :
+
+use <new database>
+--------------------------------
+Basic Operations with the shell
+--------------------------------
+
+-----------------------------------------------
+create a local variable (document)
+------------------------------------------------
+post = {"title":"My First Post", 
+"content":"First Post content", 
+"date": new Date()}
+
+db.blog.insert(post)
+------------------------------------------------
+Read
+------------------------------------------------
+
+db.blog.find()
+db.blog.findOne()
+
+------------------------------------------------
+Update
+------------------------------------------------
+post.comments= "Comment"
+db.blog.update({"title":"My First Post"},post)
+
+------------------------------------------------
+Delete
+------------------------------------------------
+db.blog.remove({title:"My First Post"})
+
+-> Empties the collection
+------------------------------------------------
+
+------------------------------------------------
+Drop the colletion
+------------------------------------------------
+
+db.blog.drop()
+------------------------------------------------
+------------------------------------------------
+
+------------------------------------------------
+View the colletion(s)
+------------------------------------------------
+show collections
+------------------------------------------------
+
+
+Data Types:
+
+MongoDB supports many datatypes. Some of them are -
+
+String - This is the most commonly used datatype to store the data. String in MongoDB must be UTF-8 valid.
+	{"x":"Value"}
+
+
+Integer - This type is used to store a numerical value. Integer can be 32 bit or 64 bit depending upon your server.
+NumberInt -> 32 bits (4 bytes)
+NumberLong -> 64 bits (8 bytes)
+
+	{"x":NumberInt("3")}
+	{"x":NumberLong("3")}
+
+
+Boolean - This type is used to store a boolean (true/ false) value.
+	{"x": true}
+
+Double - This type is used to store floating point values.
+	{"x":3.14 }
+
+
+Arrays - This type is used to store arrays or list or multiple values into one key.
+		{"x":["a","b","c","d"]}
+		{"x":[1,2,3,4]}
+
+
+Timestamp - ctimestamp. This can be handy for recording when a document has been modified or added.
+
+
+Null - This type is used to store a Null value.
+	{"x": null}
+
+Object - This datatype is used for embedded documents.
+
+
+Symbol - This datatype is used identically to a string; however, it's generally reserved for languages that use a specific symbol type.
+
+Date - This datatype is used to store the current date or time in UNIX time format. You can specify your own date time by creating object of Date and passing day, month, year into it.
+
+	{"x": new Date()}
+
+Object ID - This datatype is used to store the document’s ID.
+
+Binary data - This datatype is used to store binary data.
+
+Code - This datatype is used to store JavaScript code into the document.
+	{"x": function() {/*... */} }
+
+Regular expression - This datatype is used to store regular expression.
+
+
+-------------------------------------------------
+Embedded Documents
+-------------------------------------------------
+{
+	"name": "Ami",
+	"address" : {
+		"street":"Park Street",
+		"city": "Anand",
+		"state":"Gujarat"
+		}
+}
+
+-------------------------------------------------
+Iterative statements
+for (a = 0;a <5;a++)
+{
+}
+function f1(n){
+	fact = 1;
+	for (i=1;i<=n;i++)
+		fact = fact * i;
+	return fact;
+}
+
+
+
+
+
+function f1(id, nm, stream){
+	flag = 0;
+if (id != 1019 )
+	flag = flag -1;
+if (nm != "Nilay")
+	flag = flag -1;
+if (stream != "DCA")
+	flag = flag -1;
+
+if (flag == 0)
+	return true;
+else
+	return flag;
+}
+
+
+
+
+
+
+

@@ -1,0 +1,79 @@
+Make Collection With name "EMPL" 
+------------------------------------------------------
+-> db.createCollection("EMPL")
+------------------------------------------------------
+insert following documents
+
+([
+ {no:1,name:"ST",salary:2000,role:"OB"},
+ {no:2,name:"MSD",salary:1500,role:"WK"},
+ {no:3,name:"YS",salary:1000,role:"ALR"},
+ {no:4,name:"RD",salary:1000,role:"MOB"},
+ {no:5,name:"RS",salary:500,role:"OB"},
+ {no:6,name:"BK",salary:500,role:"MOB"},
+ {no:7,name:"VK",salary:300,role:"BW"},
+ {no:8,name:"JB",salary:400,role:"BW"},
+ {no:9,name:"HP",salary:400,role:"ALR"},
+ {no:10,name:"VS",salary:300,role:"OB"}])
+
+------------------------------------------------
+=>Display Data in Proper Format 
+	db.EMPL.find().pretty()
+	//Pretty() function is used to get Data Proper Format.
+
+=>Update Salary Of Employee where Name is "ST" by +8000
+	db.EMPL.update({"name":"ST"},{"$inc":{"salary":8000}})
+	Fisrt we have to update so  we have to write update instead of Find
+	in 1st {} the condition we have to give (in our case the name is "ST" )
+	and in next {}, we have to increment the salary b 8000.
+
+=>Update Salary Of All Employee by giving an increment of +4000 each
+	db.EMPL.updateMany({},{"$inc":{"salary":4000}})
+	In this We have to increment all Employee salary by 4k.
+	So Query would be 
+	When We have More than one record to update so instead of using update we have to use UpdateMany
+	
+=>update role of "MSD" as "C and WK"
+	db.EMPL.update({"name":"MSD"},{$set:{"role":"MENTOR"}})
+	in this there is simple task to do, just one column Value we have change.
+	if we not using the set operator then it will always overwrites value, so we would have to use $SET.
+	now i'm changing the role of VK
+
+=>Add a New Field remark to document with name "RS" set Remark as WC
+	db.EMPL.update({"name":"RS"},{$set:{"remark":"vadapav"}})
+	in this Query we have to add new fields so it will be same as we had done in last one.
+
+=>Add a New Field As Number 11,name AK,Salary 10000,role coch without using insert statement. But for Doing So You should have a Record Added woth number 11.
+	i) db.EMPL.insert({"number":11})
+	ii) db.EMPL.update({"number":11},{"$set":{"name":"AK","salary":10000,"role":"coach"}})
+	it is a Tricky Question, Examinor May Ask to Confuse
+	in this Question we have to first add the empty documenwhich have only one field called number and then we have to just Update that document.
+
+=>remove added New Field
+	db.EMPL.deleteOne({"number":11})
+
+=>Update the Field "RD" by multiplying with salary by 2
+	Aa Query Mara thi nai thai, me tane aa solve karine moklis.
+
+=>To Find Document From the empl collection where name begins with S
+	db.EMPL.find({"name":/^S/}).pretty()
+	aano matlab chhe k name s par thi start Thava Joiye.
+	It Should not be in Double Quotes.
+
+=>To Find Document From the empl collection where name begins with R
+	db.EMPL.find({"name":/^R/}).pretty()
+	aano matlab chhe k name s par thi start Thava Joiye.
+	It Should not be in Double Quotes.
+
+=>To Find Document From the empl collection where name ends with K
+	db.EMPL.find({"name":/K$/}).pretty()
+	aano matlab chhe k name s par thi start Thava Joiye.
+	It Should not be in Double Quotes.
+
+=>To Find Document From the empl collection where name ends with D
+	db.EMPL.find({"name":/D$/}).pretty()
+
+=>To Find Document From the empl collection where name has S in any position
+	db.EMPL.find({"name":/S/}).pretty()
+
+
